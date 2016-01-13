@@ -134,7 +134,8 @@ if params.eye.run
 end
 
 if pressQ
-    Screen('CloseAll'); Eyelink('StopRecording'); error('Experiment stopped by user!');
+    Screen('CloseAll'); 
+    error('Experiment stopped by user!');
 end
 
 if fixBreak
