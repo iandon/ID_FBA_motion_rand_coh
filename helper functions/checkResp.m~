@@ -1,0 +1,21 @@
+function correctTrial = checkResp(resp, ansResp)
+global params;
+
+
+respIdx = find(resp.key(1) == params.response.allowedRespKeysCodes);
+
+
+if resp.check == 0
+    correctTrial = 2;
+elseif resp.check == 1
+    if angleIdx == respIdx
+        correctTrial = 1;
+    else
+        correctTrial = 0;
+    end
+end
+
+% correctTrial;
+
+
+end

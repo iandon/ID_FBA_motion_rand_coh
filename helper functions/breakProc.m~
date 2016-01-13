@@ -1,0 +1,100 @@
+function [trialProc fixBreak recal] = breakProc(trialProc,currTrialNum,fixBreak)
+
+%[trialProcNEW, recal, breakRecentNEW, breakTrackNEW] = breakProc(trialProc, nTrials, currTrialNum, currRunNum, idx, breakTrack, breakRecent)
+%
+%To be run after a function deems "fixation broken on this trial".
+%
+%  First it rearranges the "trialProcedure' structure, such that the 
+% current trial is put at the end of the block, and all other trials after 
+% the current trial are moved up 1 in the running order. Additionally, all 
+% previous trials are kept in the same place in the trialProc structure, so
+% as not to alter the log of trials previously completed successfully (i.e. 
+% w/o breaking fixation).
+%     NOTE: As written, it requires all trial variables be arranged in the
+%     structure 'trialProc' as trialProc{currTrialNum}.variableName -> this
+%     makes it so each variable is bundled by trial, and thus can be 
+%     rearranged altogether rather than separately (avoids some trials
+%     being left out of rearrangement -> simple for loop is used so 
+%     re-structure cell order. See breakProc.m file).
+%
+%
+%   Next, this function tracks of all of the fixation breaks that have
+%  occured in the blocks AND attempts to trigger recalibration, but only if
+%  there have been a lot of fixation breaks in recent trials.
+%     The definition of "recent" is somewhat dynamic. Read comments w/ in
+%     the .m file for details on how it works.
+%
+%
+%   Inputs:
+%       trialProc       :  structure that contains cells (n = nTrials), each containing a value for each trial variable (indexed as trialProc{currentTrialNumber}.variableName)
+%       nTrials         :  total number of trials per block
+%       currTrialNum    :  1 + the number of trials successfully completed (no fixation break) -> an integer 1:nTrials
+%       currRunNum      :  the number of times the trial procedure has been attempted (takes into account number of trials that have been truncated and skipped due to fixation break) -> a number within 1:(nTrials + numFixBreaks)
+%       numFixBreaks    :  number of fixation breaks
+%       breakTrack      :  vector of runs on which there was a fixation break on this block, as of the previous fixation break
+%       breakRecent     :  number of recent fixation breaks, as of the previous fixation break ('recent' is not a straight-forward definition -> see breakProc.m file for details)
+%
+%   Outputs:
+%       trialProcNEW    :  rearranged trial procedure stucture
+%       recal           :  recalibrate eye tracker? 1 (Yes) or  0 (No)
+%       breakRecentNEW  :  number of recent fixation breaks (will be called by this function on the next fixation break)
+%       breakTrackNEW   :  vector of all run numbers on which fixation was broken
+%
+%
+% Ian Donovan
+%  Feb/March 2013
+
+global params
+
+% if ieNotDefined('fixBreak'),
+%     fixBreak=struct('fixBreak',{0},'recal',{0},'currRunNum',{currTrialNum},'numFixBreaks',{1},'breakTrack',{currTrialNum},'breakRecent',{0});
+% else 
+    fixBreak.numFixBreaks=fixBreak.numFixBreaks+1; 
+    fixBreak.currRunNum= currTrialNum+fixBreak.numFixBreaks;% total number of trials that have been run
+    fixBreak.breakTrack(fixBreak.numFixBreaks)=fixBreak.currRunNum;
+
+
+trialProc{params.trialVars.numTrialsPerBlock+1}=trialProc{currTrialNum};% move the trial with a fixbreak to the end of  the block
+trialProc(currTrialNum)=[]; % delete current trial 
+
+% if fixBreak.numFixBreaks > 1; for h = 1:(numFixBreaks-1); breakTrackNEW{h} = breakTrack{h}; end; end
+% breakTrackNEW{fixBreak.numFixBreaks} = fixBreak.currRunNum;
+if fixBreak.numFixBreaks > 1
+[fixBreak.recal(fixBreak.currRunNum) fixBreak.breakRecent] = recalibrate(fixBreak.breakTrack,fixBreak.breakRecent,fixBreak.currRunNum,fixBreak.numFixBreaks);
+recal=fixBreak.recal(fixBreak.currRunNum);
+else 
+    recal =0;
+end
+
+% recalibrate if there are too many fixation breaks
+if recal
+    sprintf('Too many fixation breaks! Recalibrate.')
+    instructions(wPtr,recal);
+    %cal = DoTrackerSetup(el);
+    driftCorr = EyelinkDoDriftCorrect(el, params.screenVar.centerPix(1),...
+        params.screenVar.centerPix(2), 1, 1);
+    recal=0;
+    fixBreak.breakRecent=0;
+end 
+
+function [recal breakRecent]=recalibrate(breakTrack,breakRecent,currRunNum,numFixBreaks)
+lastFixBreak=(currRunNum - breakTrack(numFixBreaks-1));
+
+if  numFixBreaks <= 1 ||  lastFixBreak <= 3
+    breakRecent=breakRecent+1;
+elseif lastFixBreak >= 3
+    breakRecent=breakRecent+1;
+else
+    breakRecent=0;
+end
+
+if breakRecent >=6
+    recal=1;
+else 
+    recal=0;
+end
+
+
+
+
+
