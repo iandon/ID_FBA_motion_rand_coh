@@ -1,4 +1,4 @@
-function   [fixBreak, resp, allPosPix, timestamp] = trial(wPtr,trialAngle,baseAngle,blockNum,sesNum, trialNum ,cueType,SOA,dotCoh,ansResp)
+function   [fixBreak, resp, allPosPix, timestamp] = trial(wPtr,baseAngle,blockNum,sesNum, trialNum ,cueType,SOA,dotCoh,ansResp)
 global params;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,7 +19,7 @@ timestamp.ts=0;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [allPosPix.cue]= computeMotion_Cue(baseAngle,cueType);
-[allPosPix.target]= computeMotion_Target(trialAngle,dotCoh);
+[allPosPix.target]= computeMotion_Target(baseAngle,dotCoh);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% start eye-tracker  %%%%%%%%%%%%%%%%%%%%%
@@ -29,7 +29,7 @@ timestamp.ts=0;
 if params.eye.run
     Eyelink('StartRecording');
     Eyelink('Message', sprintf('StartTrial_SesNum_%d_Block_%d_Trial_%d_angle_%d_loc_%d',...
-            sesNum,blockNum, trialNum,trialAngle,cueType));
+            sesNum,blockNum, trialNum,baseAngle,cueType));
 end
 
 pressQ = 0;
@@ -134,7 +134,8 @@ if params.eye.run
 end
 
 if pressQ
-    Screen('CloseAll'); Eyelink('StopRecording'); error('Experiment stopped by user!');
+    Screen('CloseAll'); 
+    error('Experiment stopped by user!');
 end
 
 if fixBreak
@@ -160,7 +161,7 @@ end
 if params.eye.run
     Eyelink('Message', sprintf('Trial End'));
     Eyelink('Message', sprintf('EndTrial_SesNum_%d_Block_%d_Trial_%d_angle_%d_loc_%d_val',...
-    sesNum,blockNum, trialNum,trialAngle,cueType));
+    sesNum,blockNum, trialNum,baseAngle,cueType));
 end
 
  

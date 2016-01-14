@@ -1,17 +1,17 @@
 clear all;
-addpath(genpath('/users/purplab/Desktop/Ian/ID_FBA_motion/sdCoh/helper functions'))
+addpath(genpath('/users/purplab/Desktop/Ian/ID_FBA_motion/rand_coh/helper functions'))
 addpath(genpath('/users/Shared/Psychtoolbox'))
 
 
 global params;
-params = motion_params_constStim_LD; %SET for each participant
+params = motion_params_constStim; %SET for each participant
 
 
 homedir = pwd;  
 addpath(genpath(strcat(homedir,'/mgl')));
 
 
-% params.eye.run = 0;
+params.eye.run = 0;
 params.stair.run = 0;
 params.stim.colorTest = 0;
 
@@ -99,8 +99,8 @@ for b = 1:params.block.numBlocks
         
         
         
-        [fixBreak{b}.fixBreak, respTrial, allPosPix, timestamp] = trial(wPtr, procedure{b}{i}.targetAngle,procedure{b}{i}.baseAngle, b, sesNum, i,...
-                                                                        procedure{b}{i}.cueType,procedure{b}{i}.SOA,procedure{b}{i}.sdCoh,procedure{b}{i}.ansResp);
+        [fixBreak{b}.fixBreak, respTrial, allPosPix, timestamp] = trial(wPtr,procedure{b}{i}.baseAngle, b, sesNum, i,...
+                                                                        procedure{b}{i}.cueType,procedure{b}{i}.SOA,procedure{b}{i}.coh,procedure{b}{i}.ansResp);
                                                       %trial(wPtr,trialAngle,baseAngle,blockNum,sesNum, trialNum ,cueType,SOA,dotCoh)
         % update trial parameters after response
         procedure{b}{i}.timestamp=timestamp;
