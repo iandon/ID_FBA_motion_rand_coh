@@ -6,10 +6,8 @@ addpath(genpath('/users/Shared/Psychtoolbox'))
 global params;
 params = motion_params_constStim; %SET for each participant
 
-
 homedir = pwd;  
 addpath(genpath(strcat(homedir,'/mgl')));
-
 
 params.eye.run = 0;
 params.stair.run = 0;
@@ -26,8 +24,6 @@ sesNumquest = input('Please enter the session number:\n', 's'); sesNum = str2dou
 if (sesNumquest > 1) && ~strcmp(initials,params.save.SubjectInitials)
      error('Check if settings file used is correct for this participant'); 
 end
-
-
 
 
 %%%%%%%%% set some general screen params %%%%%%%%% 

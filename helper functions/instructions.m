@@ -1,7 +1,7 @@
 function instructions(wPtr,recal)
 global params;
 
-instruct1= 'Indicate whether the motion direction, relative to 45 degrees';
+instruct1= 'Indicate whether the motion direction of the BLACK DOTS';
 instruct2= 'was more VERTICAL (1) or HORIZTONAL (2)';
 
 % keys = 'Track the overall direction of the stimulus with your eyes as best as possible.';
@@ -17,8 +17,8 @@ Screen('TextBackgroundColor',wPtr, params.text.bkColor );
 if recal
       Screen('DrawText', wPtr, recalibrate, params.screen.centerPix(1)-450, params.screen.centerPix(2)-150);
 else  
-Screen('DrawText', wPtr, instruct1, params.screen.centerPix(1)-400, params.screen.centerPix(2)-150);
-Screen('DrawText', wPtr, instruct2, params.screen.centerPix(1)-200, params.screen.centerPix(2)-100);
+Screen('DrawText', wPtr, instruct1, params.screen.centerPix(1)-300, params.screen.centerPix(2)-150);
+Screen('DrawText', wPtr, instruct2, params.screen.centerPix(1)-250, params.screen.centerPix(2)-100);
 Screen('DrawText', wPtr, start, params.screen.centerPix(1)-250, params.screen.centerPix(2)+150);
 end  
 Screen('Flip', wPtr);

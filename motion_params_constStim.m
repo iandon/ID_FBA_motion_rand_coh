@@ -51,7 +51,7 @@ stim.apertureCenterPix = [stim.apertureCenter(1)*screen.degratioX, stim.aperture
 
 % stim.sdVals = [.00001, 2, 4, 8, 16, 32, 48, 64];
 
-stim.cohVals = [0,logspace(log10(2),log10(100),7)];
+stim.cohVals = .01.*[0,logspace(log10(2),log10(100),7)];
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

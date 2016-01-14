@@ -21,7 +21,7 @@ cueType  = cueType(ord);
 coh = coh(ord);
 
 
-ansResp = ((baseAngleIndex == 2)+(baseAngleIndex == 4))+1;
+ansResp = ((baseAngleIndex == 1)+(baseAngleIndex == 3))+1;
 
 % SOA = repmat(params.ISI.preDurVect(blockNum),[numTrials,1]);
 
