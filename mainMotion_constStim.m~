@@ -13,6 +13,7 @@ params.eye.run = 0;
 params.stair.run = 0;
 params.stim.colorTest = 0;
 
+params.ISI.
 
 %initials = 'test'; sesNum = '0';    
 initials = input('Please enter subject initials: \n', 's'); initials = upper(initials);

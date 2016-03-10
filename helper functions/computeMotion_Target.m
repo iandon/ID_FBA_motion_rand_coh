@@ -17,7 +17,7 @@ for dotNum = 1:numDots
 end 
 
 
-dxdy_dirc 	= params.stim.speedDegPerSec .* (1/params.screen.monRefresh) .* [cos(pi*trialAngle_AllDots/180.0), sin(pi*trialAngle_AllDots/180.0)];
+dxdy_dirc 	= params.stim.speedDegPerSec .* (1/params.screen.monRefresh) .* [cosd(trialAngle_AllDots), sind(trialAngle_AllDots)];
 
 dxdy(:,1) =  dxdy_dirc(:,1);%.*params.screen.degratioX;
 dxdy(:,2) =  dxdy_dirc(:,2);%.*params.screen.degratioY;
