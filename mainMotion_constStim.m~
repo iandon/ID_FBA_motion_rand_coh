@@ -9,11 +9,10 @@ params = motion_params_constStim; %SET for each participant
 homedir = pwd;  
 addpath(genpath(strcat(homedir,'/mgl')));
 
-params.eye.run = 0;
-params.stair.run = 0;
-params.stim.colorTest = 0;
+% params.eye.run = 0;
+% params.stair.run = 0;
+% params.stim.colorTest = 0;
 
-params.ISI.
 
 %initials = 'test'; sesNum = '0';    
 initials = input('Please enter subject initials: \n', 's'); initials = upper(initials);
@@ -27,6 +26,7 @@ if (sesNumquest > 1) && ~strcmp(initials,params.save.SubjectInitials)
      error('Check if settings file used is correct for this participant'); 
 end
 
+params.ISI.preDurBlock = repmat(params.ISI.preDurVect, 1, (params.blockVars.numBlocks)/length(params.ISI.preDurVect));
 
 %%%%%%%%% set some general screen params %%%%%%%%% 
 Screen('CloseAll');   

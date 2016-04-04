@@ -1,4 +1,4 @@
-function procedure = calcTrialsVars_ConstStim
+function procedure = calcTrialsVars_ConstStim(currISI)
 global params;  
 numTrials = params.trial.numTrialsPerBlock; % should be 160
 
@@ -8,7 +8,7 @@ numRepeats = 1; %how many times does each trial type repeat?
 
 
 baseAnglePossibleIndex = 1:length(params.stim.baseAngles); %up,right,down,left CHECK THIS
-cueTypePossible  = [0,1,2,3,4]; %neut,valid,invalidSameAxis,invalidDiffAxis1, invalidDiffAxis2
+cueTypePossible  = [0,1,2,3,4]; %neut,valid,invalidSameAxis,invalidDiffAxis1,invalidDiffAxis2
 cohPossible = params.stim.cohVals;
 
 [baseAngleIndex,cueType,coh,repeat] = ndgrid(baseAnglePossibleIndex, cueTypePossible,cohPossible,1:numRepeats);
@@ -35,5 +35,5 @@ for i = 1:numTrials
     procedure{i}.coh  = coh(i);
     procedure{i}.ansResp  = ansResp(i);
     procedure{i}.trialIndex = i;
-    procedure{i}.SOA = params.ISI.preDur;
+    procedure{i}.SOA = currISI;
 end

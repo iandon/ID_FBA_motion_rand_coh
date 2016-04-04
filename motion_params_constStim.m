@@ -140,7 +140,7 @@ neutralCue.rectPix = [0 0 sp1 sp2];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Block params
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-block = struct('numBlocks', 5);
+block = struct('numBlocks', 6);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Trial params
@@ -164,24 +164,28 @@ text = struct('color', black, 'bkColor', gray, 'size', 24);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     ISI params
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ISI = struct('postDur', {0.05},'preDur',{.250}); %'preOrder',2,)
-% 
-% switch ISI.preOrder
-%     case 1
-%         ISI.preDurVect = [0.05,  0.250, 0.450]; % short, medium, long
-%     case 2
-%         ISI.preDurVect = [0.250, 0.450, 0.05];  % medium, long, short
-%     case 3
-%         ISI.preDurVect = [0.450,  0.05, 0.250]; % long, short, medium
-%     case 4
-%         ISI.preDurVect = [0.05,  0.450, 0.250]; % short, long, medium
-%     case 5
-%         ISI.preDurVect = [0.250,  0.05, 0.450]; % medium, short, long
-%     case 6
-%         ISI.preDurVect = [0.450, 0.250, 0.05];  % long, medium, short
-%     otherwise
-%         error('SOA order by block set incorrectly')
-% end
+ISI = struct('postDur', {0.05},'preDur',{.250}, 'preOrder', {2});
+
+
+ 
+switch ISI.preOrder
+    case 1
+        ISI.preDurVect = [0.05,  0.250, 0.450]; % short, medium, long
+    case 2
+        ISI.preDurVect = [0.250, 0.450, 0.05];  % medium, long, short
+    case 3
+        ISI.preDurVect = [0.450,  0.05, 0.250]; % long, short, medium
+    case 4
+        ISI.preDurVect = [0.05,  0.450, 0.250]; % short, long, medium
+    case 5
+        ISI.preDurVect = [0.250,  0.05, 0.450]; % medium, short, long
+    case 6
+        ISI.preDurVect = [0.450, 0.250, 0.05];  % long, medium, short
+    otherwise
+        error('ISI order by block set incorrectly')
+end
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Feedback params
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

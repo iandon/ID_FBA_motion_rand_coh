@@ -140,7 +140,7 @@ neutralCue.rectPix = [0 0 sp1 sp2];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Block params
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-block = struct('numBlocks', 5);
+block = struct('numBlocks', 6);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Trial params
@@ -165,6 +165,8 @@ text = struct('color', black, 'bkColor', gray, 'size', 24);
 %     ISI params
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ISI = struct('postDur', {0.05},'preDur',{.250}); %'preOrder',2,)
+
+
 % 
 % switch ISI.preOrder
 %     case 1
@@ -209,3 +211,5 @@ params = struct('screen', screen, 'trial', trial, 'block', block, 'save', save,.
                 'fixation', fixation,'text',text, 'response', response, 'feedback', feedback,...
                 'stim', stim, 'ISI', ISI, 'dots', dots, 'eye', eye, 'oval', oval,...
                 'preCue',preCue,'neutralCue',neutralCue); %'stair',stair
+
+end

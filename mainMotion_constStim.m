@@ -9,9 +9,9 @@ params = motion_params_constStim; %SET for each participant
 homedir = pwd;  
 addpath(genpath(strcat(homedir,'/mgl')));
 
-params.eye.run = 0;
-params.stair.run = 0;
-params.stim.colorTest = 0;
+% params.eye.run = 0;
+% params.stair.run = 0;
+% params.stim.colorTest = 0;
 
 
 %initials = 'test'; sesNum = '0';    
@@ -26,6 +26,7 @@ if (sesNumquest > 1) && ~strcmp(initials,params.save.SubjectInitials)
      error('Check if settings file used is correct for this participant'); 
 end
 
+params.ISI.preDurBlock = repmat(params.ISI.preDurVect, 1, (params.blockVars.numBlocks)/length(params.ISI.preDurVect));
 
 %%%%%%%%% set some general screen params %%%%%%%%% 
 Screen('CloseAll');   
@@ -81,7 +82,7 @@ for b = 1:params.block.numBlocks
 %                                            'PF',@PAL_Weibull,'numTrials',params.stair.numTrials,'marginalize',params.stair.marginalize);
 %     end 
     fixBreak{b}.num = 0;fixBreak{b}.recent = [];fixBreak{b}.track = [];fixBreak{b}.numRecal = 0;
-    procedure{b} = calcTrialsVars_ConstStim;
+    procedure{b} = calcTrialsVars_ConstStim(param.ISI.preDurBlock(b));
     if params.eye.run && (b > 1)
         EyelinkDoDriftCorrect(el, params.screen.centerPix(1),...
                               params.screen.centerPix(2), 1, 1);
